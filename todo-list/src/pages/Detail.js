@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
-import { loadTodo, deleteTodo, createTodo} from "../redux/modules/todolist";
+import { loadTodo, deleteTodo, createTodo, editTodo} from "../redux/modules/todolist";
 import { useHistory } from "react-router";
 
 
@@ -23,7 +23,7 @@ const Detail = (props) => {
       <DetailWrap>
         <DetailBox>
           <h1>{todo_list[todo_index]}</h1>
-          <button>메인으로</button>
+          <button onClick={() =>{ history.goBack();}}>메인으로</button>
           <button onClick={() => {
               dispatch(deleteTodo(todo_index));
               props.history.goBack();
@@ -32,8 +32,9 @@ const Detail = (props) => {
         <UpdateBox>
           <input placeholder="수정내용을 입력하세요!" ref={edit_todo}></input>
           <button onClick={() => {
-              dispatch(deleteTodo(todo_index));
-              dispatch(createTodo(edit_todo.current.value));
+              let edit_input = edit_todo.current.value
+              dispatch(editTodo(todo_index, edit_input));
+              console.log(editTodo(todo_index, edit_input));
               history.goBack();
           }}>수정하기</button>
         </UpdateBox>
